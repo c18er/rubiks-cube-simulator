@@ -19,6 +19,9 @@ public class RubiksCubeSimulator {
 	public static void main(String[] args) {
 		Cube cube = new Cube();
 		cube.printCube();
+
+		cube.turnUp();
+		cube.printCube();
 	}
 
 }

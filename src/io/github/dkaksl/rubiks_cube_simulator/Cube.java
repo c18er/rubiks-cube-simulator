@@ -15,42 +15,34 @@ public class Cube {
 
 	// faces
 	// should probably separate this into a new class.
-	private static String[][] up;
-	private static String[][] back;
-	private static String[][] right;
-	private static String[][] front;
-	private static String[][] left;
-	private static String[][] down;
-
-	// sides
-	// separate these into a new class maybe?
-	private static Object[] upSide;
-	private static Object[] backSide;
-	private static Object[] rightSide;
-	private static Object[] frontSide;
-	private static Object[] leftSide;
-	private static Object[] downSide;
+	private static String[][] upFace;
+	private static String[][] backFace;
+	private static String[][] rightFace;
+	private static String[][] frontFace;
+	private static String[][] leftFace;
+	private static String[][] downFace;
 
 	public Cube() {
-		up = new String[3][3];
-		left = new String[3][3];
-		front = new String[3][3];
-		right = new String[3][3];
-		back = new String[3][3];
-		down = new String[3][3];
+		// TODO: initialize faces here instead of using a separate method
 
-		upSide = new Object[] { up, back, right, front, left };
+		upFace = new String[3][3];
+		leftFace = new String[3][3];
+		frontFace = new String[3][3];
+		rightFace = new String[3][3];
+		backFace = new String[3][3];
+		downFace = new String[3][3];
 
 		initializeFaces();
+
 	}
 
 	private void initializeFaces() {
-		initializeFace(up, "White");
-		initializeFace(back, "Red");
-		initializeFace(right, "Green");
-		initializeFace(front, "Blue");
-		initializeFace(right, "Yellow");
-		initializeFace(down, "Orange");
+		initializeFace(upFace, "White");
+		initializeFace(backFace, "Red");
+		initializeFace(rightFace, "Green");
+		initializeFace(frontFace, "Blue");
+		initializeFace(leftFace, "Yellow");
+		initializeFace(downFace, "Orange");
 	}
 
 	private void initializeFace(String[][] side, String color) {
@@ -62,38 +54,43 @@ public class Cube {
 	}
 
 	public void printCube() {
-		printFace(up);
-		printFace(back);
-		printFace(right);
-		printFace(front);
-		printFace(left);
-		printFace(down);
+		printFace(upFace);
+		printFace(backFace);
+		printFace(rightFace);
+		printFace(frontFace);
+		printFace(leftFace);
+		printFace(downFace);
 	}
 
-	private void printFace(String[][] side) {
+	private void printFace(String[][] face) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				System.out.print(side[i][j] + " ");
+				System.out.print(face[i][j] + " ");
 			}
 			System.out.print("\r\n");
 		}
 	}
 
 	public void turnUp() {
-		// rotate:
-		// bottom row of back ← left column of right
-		// left column of right ← top row of bottom
-		// top row of bottom ← right column of left
-		// right column of left ← bottom row of back
-		// then the side itself
+		// define 9 x 9 array
+		// TODO: rotate center 5 x 5 array
+		// TODO: replace Cube faces with 3 x 3 arrays found in new 9 x 9 array
 
-		// Object[] sides =
+		String[][] side = new String[9][9];
 
-		rotateClockwise(upSide);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				side[i][j + 3] = backFace[i][j];
+				side[i + 3][j] = leftFace[i][j];
+				side[i + 3][j + 3] = upFace[i][j];
+				side[i + 3][j + 6] = rightFace[i][j];
+				side[i + 6][j + 3] = frontFace[i][j];
+			}
+		}
 	}
 
 	public void returnUp() {
-		rotateCounterClockwise(upSide);
+
 	}
 
 	public void turnLeft() {
@@ -113,27 +110,6 @@ public class Cube {
 	}
 
 	public void turnDown() {
-
-	}
-
-	private void rotateClockwise(Object[] sides) {
-		if (sides.length != 5) {
-			// throw exception
-		}
-
-		Object[] newSides = new Object[5];
-		String[][] newUp = new String[3][3];
-		String[][] newBack = new String[3][3];
-		String[][] newRight = new String[3][3];
-		String[][] newFront = new String[3][3];
-		String[][] newLeft = new String[3][3];
-
-		for (int i = 0; i < 3; i++) {
-			// newBack
-		}
-	}
-
-	private void rotateCounterClockwise(Object[] sides) {
 
 	}
 }
