@@ -23,6 +23,7 @@ public class Cube {
 	private static String[][] downFace;
 
 	public Cube() {
+
 		// TODO: initialize faces here instead of using a separate method
 
 		upFace = new String[3][3];
@@ -72,10 +73,8 @@ public class Cube {
 	}
 
 	public void turnUp() {
-		// define 9 x 9 array
-		// TODO: rotate center 5 x 5 array
-		// TODO: replace Cube faces with 3 x 3 arrays found in new 9 x 9 array
 
+		// define 9 x 9 array
 		String[][] side = new String[9][9];
 
 		for (int i = 0; i < 3; i++) {
@@ -87,6 +86,43 @@ public class Cube {
 				side[i + 6][j + 3] = frontFace[i][j];
 			}
 		}
+
+		// TODO: rotate center 5 x 5 array
+		String[][] centerArray = new String[5][5];
+
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				centerArray[i][j] = side[i + 2][j + 2];
+			}
+		}
+
+		centerArray = rotateArray(centerArray);
+
+		// TODO: replace Cube faces with 3 x 3 arrays found in new 9 x 9 array
+	}
+
+	private void printTmp(String[][] tmp) {
+		for (int i = 0; i < tmp.length; i++) {
+			for (int j = 0; j < tmp[0].length; j++) {
+				System.out.print(tmp[i][j]);
+			}
+			System.out.print("\r\n");
+		}
+	}
+
+	private String[][] rotateArray(String[][] array) {
+		int rowCount = array.length;
+		int columnCount = array[0].length;
+
+		String[][] rotatedArray = new String[rowCount][columnCount];
+
+		for (int i = 0; i < rowCount; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				rotatedArray[j][rowCount - 1 - i] = array[i][j];
+			}
+
+		}
+		return rotatedArray;
 	}
 
 	public void returnUp() {
