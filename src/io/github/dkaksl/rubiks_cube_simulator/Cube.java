@@ -21,6 +21,11 @@ public class Cube {
 	private static String[][] downFace;
 
 	private static String[][][] upSide;
+	private static String[][][] backSide;
+	private static String[][][] rightSide;
+	private static String[][][] frontSide;
+	private static String[][][] leftSide;
+	private static String[][][] downSide;
 
 	public Cube() {
 		upFace = initializeFace("White");
@@ -31,6 +36,11 @@ public class Cube {
 		downFace = initializeFace("Orange");
 
 		upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace };
+		backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace }; // TODO: some sides need to be rotated for this to work... new class
+		rightSide = new String[][][] {};
+		frontSide = new String[][][] {};
+		leftSide = new String[][][] {};
+		downSide = new String[][][] {};
 	}
 
 	private String[][] initializeFace(String color) {
@@ -63,21 +73,7 @@ public class Cube {
 	}
 
 	public void turnUp() {
-		Side side = new Side(upSide);
-		String[][] rotatedSide = side.getSideRotatedClockwise();
-		applyRotatedSideToCube(rotatedSide, upSide);
-	}
-
-	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				side[0][i][j] = rotatedSide[i][j + 3];
-				side[1][i][j] = rotatedSide[i + 3][j];
-				side[2][i][j] = rotatedSide[i + 3][j + 3];
-				side[3][i][j] = rotatedSide[i + 3][j + 6];
-				side[4][i][j] = rotatedSide[i + 6][j + 3];
-			}
-		}
+		turnSideClockwise(upSide);
 	}
 
 	public void returnUp() {
@@ -102,5 +98,23 @@ public class Cube {
 
 	public void turnDown() {
 
+	}
+
+	private void turnSideClockwise(String[][][] targetSide) {
+		Side side = new Side(targetSide);
+		String[][] rotatedSide = side.getSideRotatedClockwise();
+		applyRotatedSideToCube(rotatedSide, targetSide);
+	}
+
+	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				side[0][i][j] = rotatedSide[i][j + 3];
+				side[1][i][j] = rotatedSide[i + 3][j];
+				side[2][i][j] = rotatedSide[i + 3][j + 3];
+				side[3][i][j] = rotatedSide[i + 3][j + 6];
+				side[4][i][j] = rotatedSide[i + 6][j + 3];
+			}
+		}
 	}
 }
