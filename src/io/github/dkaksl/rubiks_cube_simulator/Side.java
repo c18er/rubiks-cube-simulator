@@ -18,24 +18,26 @@ public class Side {
 	private static String[][] rightFace;
 	private static String[][] bottomFace;
 
-	public Side(String[][] top, String[][] left, String[][] center, String[][] right, String[][] bottom) {
-		topFace = top; // TODO: check dimensions?
-		leftFace = left;
-		centerFace = center;
-		rightFace = right;
-		bottomFace = bottom;
+	public Side(String[][][] faces) {
+		topFace = faces[0]; // TODO: check dimensions?
+		leftFace = faces[1];
+		centerFace = faces[2];
+		rightFace = faces[3];
+		bottomFace = faces[4];
 	}
 
 	public String[][] getSideRotatedClockwise() {
 		String[][] side = getSideArray();
 
 		side = rotateCenterArray(side);
-		
+
 		return side;
 	}
 
 	public static String[][] getSideRotatedCounterClockwise() {
 		String[][] side = getSideArray();
+
+		// TODO
 
 		return side;
 	}
@@ -58,12 +60,12 @@ public class Side {
 
 	private static String[][] rotateCenterArray(String[][] side) {
 		String[][] centerArray = getCenterArray(side);
-		
+
 		centerArray = rotateArrayClockwise(centerArray);
 
 		return applyCenterArrayToSide(centerArray, side);
 	}
-	
+
 	private static String[][] getCenterArray(String[][] side) {
 		String[][] centerArray = new String[5][5];
 
@@ -72,7 +74,7 @@ public class Side {
 				centerArray[i][j] = side[i + 2][j + 2];
 			}
 		}
-		
+
 		return centerArray;
 	}
 

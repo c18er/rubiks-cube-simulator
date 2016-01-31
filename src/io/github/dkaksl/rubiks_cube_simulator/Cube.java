@@ -20,6 +20,8 @@ public class Cube {
 	private static String[][] leftFace;
 	private static String[][] downFace;
 
+	private static String[][][] upSide;
+
 	public Cube() {
 		upFace = initializeFace("White");
 		backFace = initializeFace("Red");
@@ -27,6 +29,8 @@ public class Cube {
 		frontFace = initializeFace("Blue");
 		leftFace = initializeFace("Yellow");
 		downFace = initializeFace("Orange");
+
+		upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace };
 	}
 
 	private String[][] initializeFace(String color) {
@@ -59,17 +63,19 @@ public class Cube {
 	}
 
 	public void turnUp() {
-		Side sideTest = new Side(backFace, leftFace, upFace, rightFace, frontFace);
-		String[][] rotatedSide = sideTest.getSideRotatedClockwise();
+		Side side = new Side(upSide);
+		String[][] rotatedSide = side.getSideRotatedClockwise();
+		applyRotatedSideToCube(rotatedSide, upSide);
+	}
 
-		// TODO: how to make this a private method
+	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				backFace[i][j] = rotatedSide[i][j + 3];
-				leftFace[i][j] = rotatedSide[i + 3][j];
-				upFace[i][j] = rotatedSide[i + 3][j + 3];
-				rightFace[i][j] = rotatedSide[i + 3][j + 6];
-				frontFace[i][j] = rotatedSide[i + 6][j + 3];
+				side[0][i][j] = rotatedSide[i][j + 3];
+				side[1][i][j] = rotatedSide[i + 3][j];
+				side[2][i][j] = rotatedSide[i + 3][j + 3];
+				side[3][i][j] = rotatedSide[i + 3][j + 6];
+				side[4][i][j] = rotatedSide[i + 6][j + 3];
 			}
 		}
 	}
