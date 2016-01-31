@@ -23,35 +23,22 @@ public class Cube {
 	private static String[][] downFace;
 
 	public Cube() {
-
-		// TODO: initialize faces here instead of using a separate method
-
-		upFace = new String[3][3];
-		leftFace = new String[3][3];
-		frontFace = new String[3][3];
-		rightFace = new String[3][3];
-		backFace = new String[3][3];
-		downFace = new String[3][3];
-
-		initializeFaces();
-
+		upFace = initializeFace("White");
+		backFace = initializeFace("Red");
+		rightFace = initializeFace("Green");
+		frontFace = initializeFace("Blue");
+		leftFace = initializeFace("Yellow");
+		downFace = initializeFace("Orange");
 	}
 
-	private void initializeFaces() {
-		initializeFace(upFace, "White");
-		initializeFace(backFace, "Red");
-		initializeFace(rightFace, "Green");
-		initializeFace(frontFace, "Blue");
-		initializeFace(leftFace, "Yellow");
-		initializeFace(downFace, "Orange");
-	}
-
-	private void initializeFace(String[][] side, String color) {
+	private String[][] initializeFace(String color) {
+		String[][] side = new String[3][3];
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				side[i][j] = color;
 			}
 		}
+		return side;
 	}
 
 	public void printCube() {
@@ -70,6 +57,7 @@ public class Cube {
 			}
 			System.out.print("\r\n");
 		}
+		System.out.println();
 	}
 
 	public void turnUp() {
@@ -77,6 +65,7 @@ public class Cube {
 		// define 9 x 9 array
 		String[][] side = new String[9][9];
 
+		// TODO: make private method that takes faces as parameters and returns side
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				side[i][j + 3] = backFace[i][j];
@@ -87,9 +76,10 @@ public class Cube {
 			}
 		}
 
-		// TODO: rotate center 5 x 5 array
+		// rotate center 5 x 5 array
 		String[][] centerArray = new String[5][5];
 
+		// TODO: make private method that takes side and returns centerArray
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				centerArray[i][j] = side[i + 2][j + 2];
@@ -98,7 +88,23 @@ public class Cube {
 
 		centerArray = rotateArray(centerArray);
 
+		// TODO: private method
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				side[i + 2][j + 2] = centerArray[i][j];
+			}
+		}
+
 		// TODO: replace Cube faces with 3 x 3 arrays found in new 9 x 9 array
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				backFace[i][j] = side[i][j + 3];
+				leftFace[i][j] = side[i + 3][j];
+				upFace[i][j] = side[i + 3][j + 3];
+				rightFace[i][j] = side[i + 3][j + 6];
+				frontFace[i][j] = side[i + 6][j + 3];
+			}
+		}
 	}
 
 	private void printTmp(String[][] tmp) {
