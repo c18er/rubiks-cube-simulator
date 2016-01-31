@@ -13,8 +13,6 @@ package io.github.dkaksl.rubiks_cube_simulator;
  */
 public class Cube {
 
-	// faces
-	// should probably separate this into a new class.
 	private static String[][] upFace;
 	private static String[][] backFace;
 	private static String[][] rightFace;
@@ -61,74 +59,19 @@ public class Cube {
 	}
 
 	public void turnUp() {
+		Side sideTest = new Side(backFace, leftFace, upFace, rightFace, frontFace);
+		String[][] rotatedSide = sideTest.getSideRotatedClockwise();
 
-		// define 9 x 9 array
-		String[][] side = new String[9][9];
-
-		// TODO: make private method that takes faces as parameters and returns side
+		// TODO: how to make this a private method
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				side[i][j + 3] = backFace[i][j];
-				side[i + 3][j] = leftFace[i][j];
-				side[i + 3][j + 3] = upFace[i][j];
-				side[i + 3][j + 6] = rightFace[i][j];
-				side[i + 6][j + 3] = frontFace[i][j];
+				backFace[i][j] = rotatedSide[i][j + 3];
+				leftFace[i][j] = rotatedSide[i + 3][j];
+				upFace[i][j] = rotatedSide[i + 3][j + 3];
+				rightFace[i][j] = rotatedSide[i + 3][j + 6];
+				frontFace[i][j] = rotatedSide[i + 6][j + 3];
 			}
 		}
-
-		// rotate center 5 x 5 array
-		String[][] centerArray = new String[5][5];
-
-		// TODO: make private method that takes side and returns centerArray
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				centerArray[i][j] = side[i + 2][j + 2];
-			}
-		}
-
-		centerArray = rotateArray(centerArray);
-
-		// TODO: private method
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				side[i + 2][j + 2] = centerArray[i][j];
-			}
-		}
-
-		// TODO: replace Cube faces with 3 x 3 arrays found in new 9 x 9 array
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				backFace[i][j] = side[i][j + 3];
-				leftFace[i][j] = side[i + 3][j];
-				upFace[i][j] = side[i + 3][j + 3];
-				rightFace[i][j] = side[i + 3][j + 6];
-				frontFace[i][j] = side[i + 6][j + 3];
-			}
-		}
-	}
-
-	private void printTmp(String[][] tmp) {
-		for (int i = 0; i < tmp.length; i++) {
-			for (int j = 0; j < tmp[0].length; j++) {
-				System.out.print(tmp[i][j]);
-			}
-			System.out.print("\r\n");
-		}
-	}
-
-	private String[][] rotateArray(String[][] array) {
-		int rowCount = array.length;
-		int columnCount = array[0].length;
-
-		String[][] rotatedArray = new String[rowCount][columnCount];
-
-		for (int i = 0; i < rowCount; i++) {
-			for (int j = 0; j < columnCount; j++) {
-				rotatedArray[j][rowCount - 1 - i] = array[i][j];
-			}
-
-		}
-		return rotatedArray;
 	}
 
 	public void returnUp() {
