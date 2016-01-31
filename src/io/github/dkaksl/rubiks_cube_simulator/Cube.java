@@ -36,7 +36,7 @@ public class Cube {
 		downFace = initializeFace("Orange");
 
 		upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace };
-		backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace }; // TODO: some sides need to be rotated for this to work... new class
+		backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace };
 		rightSide = new String[][][] {};
 		frontSide = new String[][][] {};
 		leftSide = new String[][][] {};

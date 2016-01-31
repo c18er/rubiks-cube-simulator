@@ -18,8 +18,10 @@ public class Side {
 	private static String[][] rightFace;
 	private static String[][] bottomFace;
 
+	// TODO: rotate sides on initialization as necessary
+	// TODO: check dimensions?
 	public Side(String[][][] faces) {
-		topFace = faces[0]; // TODO: check dimensions?
+		topFace = faces[0];
 		leftFace = faces[1];
 		centerFace = faces[2];
 		rightFace = faces[3];
