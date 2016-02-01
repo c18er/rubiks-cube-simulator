@@ -20,8 +20,14 @@ public class RubiksCubeSimulator {
 		Cube cube = new Cube();
 		cube.printCube();
 
-		cube.turnUp();
+		// cube.turnUp();
+		cube.turnBack();
+		cube.turnBack();
+		cube.turnBack();
+		cube.turnBack();
 		cube.printCube();
+
+		// TODO: make UI (to help debugging)
 	}
 
 }

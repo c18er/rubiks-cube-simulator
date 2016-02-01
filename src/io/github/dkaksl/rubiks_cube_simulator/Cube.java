@@ -73,37 +73,44 @@ public class Cube {
 	}
 
 	public void turnUp() {
-		turnSideClockwise(upSide);
+		turnSideClockwise("up", upSide);
 	}
 
 	public void returnUp() {
-
+		turnSideCounterClockwise("up", upSide);
 	}
 
 	public void turnLeft() {
-
+		turnSideClockwise("left", leftSide);
 	}
 
 	public void turnFront() {
-
+		turnSideClockwise("front", frontSide);
 	}
 
 	public void turnRight() {
-
+		turnSideClockwise("right", rightSide);
 	}
 
 	public void turnBack() {
-
+		turnSideClockwise("back", backSide);
 	}
 
 	public void turnDown() {
-
+		turnSideClockwise("down", downSide);
 	}
 
-	private void turnSideClockwise(String[][][] targetSide) {
-		Side side = new Side(targetSide);
+	private void turnSideClockwise(String orientation, String[][][] targetSide) {
+		Side side = new Side(orientation, targetSide);
 		String[][] rotatedSide = side.getSideRotatedClockwise();
 		applyRotatedSideToCube(rotatedSide, targetSide);
+	}
+
+	private void turnSideCounterClockwise(String orientation, String[][][] targetSide) {
+		// TODO: actually turn side clockwise
+		turnSideClockwise(orientation, targetSide);
+		turnSideClockwise(orientation, targetSide);
+		turnSideClockwise(orientation, targetSide);
 	}
 
 	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
@@ -116,5 +123,29 @@ public class Cube {
 				side[4][i][j] = rotatedSide[i + 6][j + 3];
 			}
 		}
+	}
+
+	public static String[][] getUpFace() {
+		return upFace;
+	}
+
+	public static String[][] getBackFace() {
+		return backFace;
+	}
+
+	public static String[][] getRightFace() {
+		return rightFace;
+	}
+
+	public static String[][] getFrontFace() {
+		return frontFace;
+	}
+
+	public static String[][] getLeftFace() {
+		return leftFace;
+	}
+
+	public static String[][] getDownFace() {
+		return downFace;
 	}
 }
