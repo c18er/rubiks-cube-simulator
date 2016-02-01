@@ -18,14 +18,45 @@ public class Side {
 	private static String[][] rightFace;
 	private static String[][] bottomFace;
 
-	// TODO: rotate sides on initialization as necessary
 	// TODO: check dimensions?
-	public Side(String[][][] faces) {
-		topFace = faces[0];
-		leftFace = faces[1];
-		centerFace = faces[2];
-		rightFace = faces[3];
-		bottomFace = faces[4];
+	public Side(String orientation, String[][][] faces) {
+		if ("up".equals(orientation)) {
+			topFace = faces[0];
+			leftFace = faces[1];
+			centerFace = faces[2];
+			rightFace = faces[3];
+			bottomFace = faces[4];
+		} else if ("back".equals(orientation)) {
+			topFace = faces[0];
+			leftFace = rotateArrayClockwise(faces[1]);
+			centerFace = faces[2];
+			rightFace = rotateArrayCounterClockwise(faces[3]);
+			bottomFace = faces[4];
+		} else if ("right".equals(orientation)) {
+			topFace = rotateArrayClockwise(faces[0]);
+			leftFace = faces[1];
+			centerFace = faces[2];
+			rightFace = faces[3];
+			bottomFace = rotateArrayCounterClockwise(faces[4]);
+		} else if ("front".equals(orientation)) {
+			topFace = faces[0];
+			leftFace = rotateArrayCounterClockwise(faces[1]);
+			centerFace = faces[2];
+			rightFace = rotateArrayClockwise(faces[3]);
+			bottomFace = faces[4];
+		} else if ("left".equals(orientation)) {
+			topFace = rotateArrayCounterClockwise(faces[0]);
+			leftFace = faces[1];
+			centerFace = faces[2];
+			rightFace = faces[3];
+			bottomFace = rotateArrayClockwise(faces[4]);
+		} else if ("down".equals(orientation)) {
+			topFace = rotateArrayClockwise(rotateArrayClockwise(faces[0]));
+			leftFace = faces[1];
+			centerFace = faces[2];
+			rightFace = faces[3];
+			bottomFace = rotateArrayClockwise(rotateArrayClockwise(faces[4]));
+		}
 	}
 
 	public String[][] getSideRotatedClockwise() {
@@ -101,6 +132,17 @@ public class Side {
 			}
 
 		}
+		return rotatedArray;
+	}
+
+	private static String[][] rotateArrayCounterClockwise(String[][] array) {
+		String[][] rotatedArray =  array;
+		
+		// TODO: actually rotate array counter clockwise
+		rotatedArray = rotateArrayClockwise(rotatedArray);
+		rotatedArray = rotateArrayClockwise(rotatedArray);
+		rotatedArray = rotateArrayClockwise(rotatedArray);
+
 		return rotatedArray;
 	}
 }
