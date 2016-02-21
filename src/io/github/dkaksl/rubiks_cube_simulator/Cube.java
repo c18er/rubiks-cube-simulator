@@ -54,11 +54,7 @@ public class Cube {
 			tmpBack[0][i] = leftFace[0][i];
 		}
 
-		// TODO: make private method that applies faces when parameters are not null
-		leftFace = applyFace(tmpLeft);
-		frontFace = applyFace(tmpFront);
-		rightFace = applyFace(tmpRight);
-		backFace = applyFace(tmpBack);
+		reapplyFaces(new String[][][] { null, tmpLeft, tmpFront, tmpRight, null, tmpBack });
 	}
 
 	public void turnLeft() {
@@ -76,10 +72,7 @@ public class Cube {
 			tmpBack[2 - i][2] = downFace[i][0];
 		}
 
-		upFace = applyFace(tmpUp);
-		frontFace = applyFace(tmpFront);
-		downFace = applyFace(tmpDown);
-		backFace = applyFace(tmpBack);
+		reapplyFaces(new String[][][] { tmpUp, null, tmpFront, null, tmpDown, tmpBack });
 	}
 
 	public void turnFront() {
@@ -97,25 +90,56 @@ public class Cube {
 			tmpDown[0][i] = rightFace[2 - i][0];
 		}
 
-		upFace = applyFace(tmpUp);
-		leftFace = applyFace(tmpLeft);
-		rightFace = applyFace(tmpRight);
-		downFace = applyFace(tmpDown);
+		reapplyFaces(new String[][][] { tmpUp, tmpLeft, null, tmpRight, tmpDown, null });
 	}
 
 	public void turnRight() {
 		rightFace = rotateArrayClockwise(rightFace);
-		// turnSideClockwise("right", rightSide);
-	}
 
-	public void turnBack() {
-		backFace = rotateArrayClockwise(backFace);
-		// turnSideClockwise("back", backSide);
+		String[][] tmpUp = applyFace(upFace);
+		String[][] tmpFront = applyFace(frontFace);
+		String[][] tmpBack = applyFace(backFace);
+		String[][] tmpDown = applyFace(downFace);
+
+		for (int i = 0; i < 3; i++) {
+			tmpUp[i][2] = frontFace[i][2];
+			tmpFront[i][2] = downFace[i][2];
+			tmpBack[i][0] = upFace[2 - i][2];
+			tmpDown[i][2] = backFace[2 - i][0];
+		}
+
+		reapplyFaces(new String[][][] { tmpUp, null, tmpFront, null, tmpDown, tmpBack });
 	}
 
 	public void turnDown() {
 		downFace = rotateArrayClockwise(downFace);
-		// turnSideClockwise("down", downSide);
+
+		String[][] tmpFront = applyFace(frontFace);
+		String[][] tmpLeft = applyFace(leftFace);
+		String[][] tmpRight = applyFace(rightFace);
+		String[][] tmpBack = applyFace(backFace);
+
+		for (int i = 0; i < 3; i++) {
+			tmpFront[2][i] = leftFace[2][i];
+			tmpLeft[2][i] = backFace[2][i];
+			tmpRight[2][i] = frontFace[2][i];
+			tmpBack[2][i] = rightFace[2][i];
+		}
+
+		reapplyFaces(new String[][][] { null, tmpLeft, tmpFront, tmpRight, null, tmpBack });
+	}
+
+	public void turnBack() {
+		backFace = rotateArrayClockwise(backFace);
+
+		String[][] tmpUp = applyFace(upFace);
+		String[][] tmpRight = applyFace(rightFace);
+		String[][] tmpLeft = applyFace(leftFace);
+		String[][] tmpDown = applyFace(downFace);
+
+		for (int i = 0; i < 3; i++) {
+
+		}
 	}
 
 	public void returnUp() {
@@ -124,7 +148,25 @@ public class Cube {
 		turnUp();
 	}
 
-	private String[][] applyFace(String[][] source) {
+	/**
+	 * Order: up, left, front, right, down, back
+	 * 
+	 * @param faces
+	 */
+	private static void reapplyFaces(String[][][] faces) {
+		if (faces.length != 6) {
+			// TODO: throw exception
+		}
+
+		upFace = (faces[0] == null) ? upFace : applyFace(faces[0]);
+		leftFace = (faces[1] == null) ? leftFace : applyFace(faces[1]);
+		frontFace = (faces[2] == null) ? frontFace : applyFace(faces[2]);
+		rightFace = (faces[3] == null) ? rightFace : applyFace(faces[3]);
+		downFace = (faces[4] == null) ? downFace : applyFace(faces[4]);
+		backFace = (faces[5] == null) ? backFace : applyFace(faces[5]);
+	}
+
+	private static String[][] applyFace(String[][] source) {
 		String[][] target = new String[3][3];
 
 		for (int i = 0; i < 3; i++) {
