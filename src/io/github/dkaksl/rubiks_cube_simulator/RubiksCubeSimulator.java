@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
  */
 public class RubiksCubeSimulator extends JFrame implements ActionListener {
 
+	private final JPanel rightPanel;
 	private final JPanel topPanel;
 	private final JPanel centerPanel;
 	private final JPanel bottomPanel;
@@ -32,6 +33,9 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 	private static JButton frontButton;
 	private static JButton rightButton;
 	private static JButton downButton;
+
+	private static JButton randomButton;
+	private static JButton shuffleButton;
 
 	private static JButton reUpButton;
 	private static JButton reBackButton;
@@ -48,12 +52,16 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 		topPanel = generateTopPanel();
 		centerPanel = generateCenterPanel();
 		bottomPanel = generateBottomPanel();
+		rightPanel = generateRightPanel();
 
 		this.setLayout(new BorderLayout());
 		this.setSize(width, height);
+
+		this.getContentPane().add(rightPanel, BorderLayout.EAST);
 		this.getContentPane().add(topPanel, BorderLayout.NORTH);
 		this.getContentPane().add(centerPanel, BorderLayout.CENTER);
 		this.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -73,6 +81,21 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 			}
 			cubeView.append("\n");
 		}
+	}
+
+	private JPanel generateRightPanel() {
+		JPanel jPanel = new JPanel();
+
+		randomButton = new JButton("random");
+		shuffleButton = new JButton("shuffle");
+
+		randomButton.addActionListener(this);
+		shuffleButton.addActionListener(this);
+
+		jPanel.add(randomButton);
+		jPanel.add(shuffleButton);
+
+		return jPanel;
 	}
 
 	private JPanel generateTopPanel() {
@@ -169,6 +192,10 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 			cube.returnRight();
 		} else if (e.getSource() == reDownButton) {
 			cube.returnDown();
+		} else if (e.getSource() == randomButton) {
+			cube.randomMove();
+		} else if (e.getSource() == shuffleButton) {
+			cube.shuffleCube();
 		}
 		updateCubeView();
 	}
