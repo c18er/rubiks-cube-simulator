@@ -137,18 +137,13 @@ public class Cube {
 		return rotatedArray; // return probably not necessary anywhere
 	}
 
-	private void turnSideClockwise(String orientation, String[][][] targetSide) {
-		Side side = new Side(orientation, targetSide);
-		String[][] rotatedSide = side.getSideRotatedClockwise();
-		applyRotatedSideToCube(rotatedSide, targetSide);
-	}
+	/*
+	 * private void turnSideClockwise(String orientation, String[][][] targetSide) { Side side = new Side(orientation, targetSide); String[][] rotatedSide = side.getSideRotatedClockwise(); applyRotatedSideToCube(rotatedSide, targetSide); }
+	 */
 
-	private void turnSideCounterClockwise(String orientation, String[][][] targetSide) {
-		// TODO: actually turn side clockwise
-		turnSideClockwise(orientation, targetSide);
-		turnSideClockwise(orientation, targetSide);
-		turnSideClockwise(orientation, targetSide);
-	}
+	/*
+	 * private void turnSideCounterClockwise(String orientation, String[][][] targetSide) { // TODO: actually turn side clockwise turnSideClockwise(orientation, targetSide); turnSideClockwise(orientation, targetSide); turnSideClockwise(orientation, targetSide); }
+	 */
 
 	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
 		for (int i = 0; i < 3; i++) {
