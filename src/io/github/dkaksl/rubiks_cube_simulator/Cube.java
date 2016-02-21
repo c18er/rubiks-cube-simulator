@@ -20,10 +20,6 @@ public class Cube {
 	private static String[][] leftFace;
 	private static String[][] downFace;
 
-	/*
-	 * private static String[][][] upSide; private static String[][][] backSide; private static String[][][] rightSide; private static String[][][] frontSide; private static String[][][] leftSide; private static String[][][] downSide;
-	 */
-
 	public Cube() {
 		upFace = initializeFace("Ｗ");
 		backFace = initializeFace("Ｒ");
@@ -31,10 +27,6 @@ public class Cube {
 		frontFace = initializeFace("Ｂ");
 		leftFace = initializeFace("Ｙ");
 		downFace = initializeFace("Ｏ");
-
-		/*
-		 * upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace }; backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace }; rightSide = new String[][][] { upFace, frontFace, rightFace, backFace, downFace }; frontSide = new String[][][] { upFace, leftFace, frontFace, rightFace, downFace }; leftSide = new String[][][] { upFace, backFace, leftFace, frontFace, downFace }; downSide = new String[][][] { frontFace, leftFace, downFace, rightFace, backFace };
-		 */
 	}
 
 	private String[][] initializeFace(String color) {
@@ -136,14 +128,6 @@ public class Cube {
 		}
 		return rotatedArray; // return probably not necessary anywhere
 	}
-
-	/*
-	 * private void turnSideClockwise(String orientation, String[][][] targetSide) { Side side = new Side(orientation, targetSide); String[][] rotatedSide = side.getSideRotatedClockwise(); applyRotatedSideToCube(rotatedSide, targetSide); }
-	 */
-
-	/*
-	 * private void turnSideCounterClockwise(String orientation, String[][][] targetSide) { // TODO: actually turn side clockwise turnSideClockwise(orientation, targetSide); turnSideClockwise(orientation, targetSide); turnSideClockwise(orientation, targetSide); }
-	 */
 
 	private void applyRotatedSideToCube(String[][] rotatedSide, String[][][] side) {
 		for (int i = 0; i < 3; i++) {
