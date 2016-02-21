@@ -302,26 +302,26 @@ public class Cube {
 	}
 
 	public static String[][] getUpFace() {
-		return upFace;
+		return applyFace(upFace);
 	}
 
 	public static String[][] getBackFace() {
-		return backFace;
+		return applyFace(backFace);
 	}
 
 	public static String[][] getRightFace() {
-		return rightFace;
+		return applyFace(rightFace);
 	}
 
 	public static String[][] getFrontFace() {
-		return frontFace;
+		return applyFace(frontFace);
 	}
 
 	public static String[][] getLeftFace() {
-		return leftFace;
+		return applyFace(leftFace);
 	}
 
 	public static String[][] getDownFace() {
-		return downFace;
+		return applyFace(downFace);
 	}
 }
