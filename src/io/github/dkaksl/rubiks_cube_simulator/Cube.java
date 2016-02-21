@@ -20,27 +20,21 @@ public class Cube {
 	private static String[][] leftFace;
 	private static String[][] downFace;
 
-	private static String[][][] upSide;
-	private static String[][][] backSide;
-	private static String[][][] rightSide;
-	private static String[][][] frontSide;
-	private static String[][][] leftSide;
-	private static String[][][] downSide;
+	/*
+	 * private static String[][][] upSide; private static String[][][] backSide; private static String[][][] rightSide; private static String[][][] frontSide; private static String[][][] leftSide; private static String[][][] downSide;
+	 */
 
 	public Cube() {
-		upFace = initializeFace("White");
-		backFace = initializeFace("Red");
-		rightFace = initializeFace("Green");
-		frontFace = initializeFace("Blue");
-		leftFace = initializeFace("Yellow");
-		downFace = initializeFace("Orange");
+		upFace = initializeFace("Ｗ");
+		backFace = initializeFace("Ｒ");
+		rightFace = initializeFace("Ｇ");
+		frontFace = initializeFace("Ｂ");
+		leftFace = initializeFace("Ｙ");
+		downFace = initializeFace("Ｏ");
 
-		upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace };
-		backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace };
-		rightSide = new String[][][] {};
-		frontSide = new String[][][] {};
-		leftSide = new String[][][] {};
-		downSide = new String[][][] {};
+		/*
+		 * upSide = new String[][][] { backFace, leftFace, upFace, rightFace, frontFace }; backSide = new String[][][] { downFace, leftFace, backFace, rightFace, upFace }; rightSide = new String[][][] { upFace, frontFace, rightFace, backFace, downFace }; frontSide = new String[][][] { upFace, leftFace, frontFace, rightFace, downFace }; leftSide = new String[][][] { upFace, backFace, leftFace, frontFace, downFace }; downSide = new String[][][] { frontFace, leftFace, downFace, rightFace, backFace };
+		 */
 	}
 
 	private String[][] initializeFace(String color) {
@@ -53,51 +47,94 @@ public class Cube {
 		return side;
 	}
 
-	public void printCube() {
-		printFace(upFace);
-		printFace(backFace);
-		printFace(rightFace);
-		printFace(frontFace);
-		printFace(leftFace);
-		printFace(downFace);
+	public void turnUp() {
+		String[][] tmpUp = applyFace(upFace);
+		String[][] tmpLeft = applyFace(leftFace);
+		String[][] tmpFront = applyFace(frontFace);
+		String[][] tmpRight = applyFace(rightFace);
+		String[][] tmpBack = applyFace(backFace);
+
+		rotateArrayClockwise(tmpUp);
+		for (int i = 0; i < 3; i++) {
+			tmpLeft[0][i] = frontFace[0][i];
+			tmpFront[0][i] = rightFace[0][i];
+			tmpRight[0][i] = backFace[0][i];
+			tmpBack[0][i] = leftFace[0][i];
+		}
+
+		upFace = applyFace(tmpUp);
+		leftFace = applyFace(tmpLeft);
+		frontFace = applyFace(tmpFront);
+		rightFace = applyFace(tmpRight);
+		backFace = applyFace(tmpBack);
 	}
 
-	private void printFace(String[][] face) {
+	private String[][] applyFace(String[][] source) {
+		String[][] target = new String[3][3];
+
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				System.out.print(face[i][j] + " ");
+				target[i][j] = source[i][j];
 			}
-			System.out.print("\r\n");
 		}
-		System.out.println();
-	}
 
-	public void turnUp() {
-		turnSideClockwise("up", upSide);
+		return target;
 	}
 
 	public void returnUp() {
-		turnSideCounterClockwise("up", upSide);
+		// turnSideCounterClockwise("up", upSide);
 	}
 
 	public void turnLeft() {
-		turnSideClockwise("left", leftSide);
+		String[][] tmpLeft = applyFace(leftFace);
+		String[][] tmpUp = applyFace(upFace);
+		String[][] tmpFront = applyFace(frontFace);
+		String[][] tmpDown = applyFace(downFace);
+		String[][] tmpBack = applyFace(backFace);
+
+		rotateArrayClockwise(tmpLeft);
+		for (int i = 0; i < 3; i++) {
+			tmpUp[i][0] = backFace[2 - i][2];
+			tmpFront[i][0] = upFace[i][0];
+			tmpDown[i][0] = frontFace[i][0];
+			tmpBack[2 - i][2] = downFace[i][0];
+		}
+
+		leftFace = applyFace(tmpLeft);
+		upFace = applyFace(tmpUp);
+		frontFace = applyFace(tmpFront);
+		downFace = applyFace(tmpDown);
+		backFace = applyFace(tmpBack);
 	}
 
 	public void turnFront() {
-		turnSideClockwise("front", frontSide);
+		// turnSideClockwise("front", frontSide);
 	}
 
 	public void turnRight() {
-		turnSideClockwise("right", rightSide);
+		// turnSideClockwise("right", rightSide);
 	}
 
 	public void turnBack() {
-		turnSideClockwise("back", backSide);
+		// turnSideClockwise("back", backSide);
 	}
 
 	public void turnDown() {
-		turnSideClockwise("down", downSide);
+		// turnSideClockwise("down", downSide);
+	}
+
+	private static String[][] rotateArrayClockwise(String[][] array) {
+		int rowCount = array.length;
+		int columnCount = array[0].length;
+
+		String[][] rotatedArray = new String[rowCount][columnCount];
+
+		for (int i = 0; i < rowCount; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				rotatedArray[j][rowCount - 1 - i] = array[i][j];
+			}
+		}
+		return rotatedArray; // return probably not necessary anywhere
 	}
 
 	private void turnSideClockwise(String orientation, String[][][] targetSide) {
@@ -123,6 +160,29 @@ public class Cube {
 				side[4][i][j] = rotatedSide[i + 6][j + 3];
 			}
 		}
+	}
+
+	public String[][] getFlatCube() {
+		String[][] cube = new String[9][12];
+
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 12; j++) {
+				cube[i][j] = "□";
+			}
+		}
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				cube[i][j + 3] = upFace[i][j];
+				cube[i + 3][j] = leftFace[i][j];
+				cube[i + 3][j + 3] = frontFace[i][j];
+				cube[i + 3][j + 6] = rightFace[i][j];
+				cube[i + 3][j + 9] = backFace[i][j];
+				cube[i + 6][j + 3] = downFace[i][j];
+			}
+		}
+
+		return cube;
 	}
 
 	public static String[][] getUpFace() {
