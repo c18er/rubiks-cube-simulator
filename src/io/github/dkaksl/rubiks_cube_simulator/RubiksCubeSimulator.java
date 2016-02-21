@@ -108,7 +108,7 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == (upButton)) {
+		if (e.getSource() == upButton) {
 			cube.turnUp();
 		} else if (e.getSource() == backButton) {
 			cube.turnBack();
