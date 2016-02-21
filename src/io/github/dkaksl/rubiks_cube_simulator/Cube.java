@@ -301,6 +301,40 @@ public class Cube {
 		return cube;
 	}
 
+	public boolean isSolved() {
+		if (!isFaceSolved(upFace)) {
+			return false;
+		}
+		if (!isFaceSolved(leftFace)) {
+			return false;
+		}
+		if (!isFaceSolved(frontFace)) {
+			return false;
+		}
+		if (!isFaceSolved(rightFace)) {
+			return false;
+		}
+		if (!isFaceSolved(backFace)) {
+			return false;
+		}
+		if (!isFaceSolved(downFace)) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean isFaceSolved(String[][] face) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (!face[i][j].equals(face[0][0])) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	public static String[][] getUpFace() {
 		return applyFace(upFace);
 	}

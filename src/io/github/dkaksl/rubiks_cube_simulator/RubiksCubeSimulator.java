@@ -36,6 +36,8 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 
 	private static JButton randomButton;
 	private static JButton shuffleButton;
+	private static JButton solvedCheckButton;
+	private static JButton solveButton;
 
 	private static JButton reUpButton;
 	private static JButton reBackButton;
@@ -79,7 +81,9 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 			for (int j = 0; j < 12; j++) {
 				cubeView.append(view[i][j]);
 			}
-			cubeView.append("\n");
+			if (i < 8) {
+				cubeView.append("\n");
+			}
 		}
 	}
 
@@ -88,12 +92,18 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 
 		randomButton = new JButton("random");
 		shuffleButton = new JButton("shuffle");
+		solvedCheckButton = new JButton("solved?");
+		solveButton = new JButton("solve");
 
 		randomButton.addActionListener(this);
 		shuffleButton.addActionListener(this);
+		solvedCheckButton.addActionListener(this);
+		solveButton.addActionListener(this);
 
 		jPanel.add(randomButton);
 		jPanel.add(shuffleButton);
+		jPanel.add(solvedCheckButton);
+		jPanel.add(solveButton);
 
 		return jPanel;
 	}
@@ -196,6 +206,10 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 			cube.randomMove();
 		} else if (e.getSource() == shuffleButton) {
 			cube.shuffleCube();
+		} else if (e.getSource() == solvedCheckButton) {
+			System.out.println("cube is solved? " + cube.isSolved());
+		} else if (e.getSource() == solveButton) {
+			// TODO: solve cube
 		}
 		updateCubeView();
 	}
