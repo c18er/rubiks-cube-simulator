@@ -148,6 +148,36 @@ public class Cube {
 		turnUp();
 	}
 
+	public void returnLeft() {
+		turnLeft();
+		turnLeft();
+		turnLeft();
+	}
+
+	public void returnFront() {
+		turnFront();
+		turnFront();
+		turnFront();
+	}
+
+	public void returnRight() {
+		turnRight();
+		turnRight();
+		turnRight();
+	}
+
+	public void returnDown() {
+		turnDown();
+		turnDown();
+		turnDown();
+	}
+
+	public void returnBack() {
+		turnBack();
+		turnBack();
+		turnBack();
+	}
+
 	/**
 	 * Order: up, left, front, right, down, back
 	 * 

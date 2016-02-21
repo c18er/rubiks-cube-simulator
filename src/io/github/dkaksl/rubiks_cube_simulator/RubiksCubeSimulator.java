@@ -24,6 +24,7 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 
 	private final JPanel topPanel;
 	private final JPanel centerPanel;
+	private final JPanel bottomPanel;
 
 	private static JButton upButton;
 	private static JButton backButton;
@@ -32,6 +33,13 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 	private static JButton rightButton;
 	private static JButton downButton;
 
+	private static JButton reUpButton;
+	private static JButton reBackButton;
+	private static JButton reLeftButton;
+	private static JButton reFrontButton;
+	private static JButton reRightButton;
+	private static JButton reDownButton;
+
 	private static JTextArea cubeView;
 
 	private static Cube cube;
@@ -39,11 +47,13 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 	public RubiksCubeSimulator(int width, int height) {
 		topPanel = generateTopPanel();
 		centerPanel = generateCenterPanel();
+		bottomPanel = generateBottomPanel();
 
 		this.setLayout(new BorderLayout());
 		this.setSize(width, height);
 		this.getContentPane().add(topPanel, BorderLayout.NORTH);
 		this.getContentPane().add(centerPanel, BorderLayout.CENTER);
+		this.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -103,6 +113,33 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 		return jPanel;
 	}
 
+	private JPanel generateBottomPanel() {
+		JPanel jPanel = new JPanel();
+
+		reUpButton = new JButton("up");
+		reBackButton = new JButton("back");
+		reLeftButton = new JButton("left");
+		reFrontButton = new JButton("front");
+		reRightButton = new JButton("right");
+		reDownButton = new JButton("down");
+
+		reUpButton.addActionListener(this);
+		reBackButton.addActionListener(this);
+		reLeftButton.addActionListener(this);
+		reFrontButton.addActionListener(this);
+		reRightButton.addActionListener(this);
+		reDownButton.addActionListener(this);
+
+		jPanel.add(reUpButton);
+		jPanel.add(reBackButton);
+		jPanel.add(reLeftButton);
+		jPanel.add(reFrontButton);
+		jPanel.add(reRightButton);
+		jPanel.add(reDownButton);
+
+		return jPanel;
+	}
+
 	private static void generateMainWindow() {
 		RubiksCubeSimulator simulator = new RubiksCubeSimulator(600, 600);
 	}
@@ -120,6 +157,18 @@ public class RubiksCubeSimulator extends JFrame implements ActionListener {
 			cube.turnRight();
 		} else if (e.getSource() == downButton) {
 			cube.turnDown();
+		} else if (e.getSource() == reUpButton) {
+			cube.returnUp();
+		} else if (e.getSource() == reBackButton) {
+			cube.returnBack();
+		} else if (e.getSource() == reLeftButton) {
+			cube.returnLeft();
+		} else if (e.getSource() == reFrontButton) {
+			cube.returnFront();
+		} else if (e.getSource() == reRightButton) {
+			cube.returnRight();
+		} else if (e.getSource() == reDownButton) {
+			cube.returnDown();
 		}
 		updateCubeView();
 	}
