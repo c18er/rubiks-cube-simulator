@@ -7,6 +7,8 @@
  */
 package io.github.dkaksl.rubiks_cube_simulator;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * @author Amani Kilumanga
  *
@@ -138,8 +140,13 @@ public class Cube {
 		String[][] tmpDown = applyFace(downFace);
 
 		for (int i = 0; i < 3; i++) {
-
+			tmpUp[0][i] = rightFace[i][2];
+			tmpRight[i][2] = downFace[2][2 - i];
+			tmpLeft[i][0] = upFace[0][2 - i];
+			tmpDown[2][i] = leftFace[i][0];
 		}
+
+		reapplyFaces(new String[][][] { tmpUp, tmpLeft, null, tmpRight, tmpDown, null });
 	}
 
 	public void returnUp() {
@@ -176,6 +183,55 @@ public class Cube {
 		turnBack();
 		turnBack();
 		turnBack();
+	}
+
+	public void randomMove() {
+		int random = ThreadLocalRandom.current().nextInt(0, 12);
+
+		switch (random) {
+		case 0:
+			this.turnUp();
+			break;
+		case 1:
+			this.turnLeft();
+			break;
+		case 2:
+			this.turnFront();
+			break;
+		case 3:
+			this.turnRight();
+			break;
+		case 4:
+			this.turnDown();
+			break;
+		case 5:
+			this.turnBack();
+			break;
+		case 6:
+			this.returnUp();
+			break;
+		case 7:
+			this.returnLeft();
+			break;
+		case 8:
+			this.returnFront();
+			break;
+		case 9:
+			this.returnRight();
+			break;
+		case 10:
+			this.returnDown();
+			break;
+		case 11:
+			this.returnBack();
+			break;
+		}
+	}
+
+	public void shuffleCube() {
+		for (int i = 0; i < 100; i++) {
+			this.randomMove();
+		}
 	}
 
 	/**
